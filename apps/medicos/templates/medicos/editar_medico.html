@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Editar médico</h2>
+              <div class="card-deck">
+                <div class="card shadow mb-4">
+                  <div class="card-body">
+                    <form method="post" action="">
+                      {% csrf_token %}
+                      {% if error is not None %}
+                          <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                          </div>
+                      {% endif %}
+                      <div class="form-row">
+  
+                        <div class="form-group col-md-6">
+                          <label for="inputNombres">Nombres</label>
+                          <input type="text" class="form-control" id="inputNombres" placeholder="Nombres" name="txtNombres" value="{{ medico.usuario.user.first_name }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputApellidos">Apellidos</label>
+                          <input type="text" class="form-control" id="inputApellidos" placeholder="Apellidos" name="txtApellidos" value="{{ medico.usuario.user.last_name }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputEspecialidad">Especialidad</label>
+                          <select id="inputEspecialidad" name="txtEspecialidad" class="form-control select2">
+                            <option value="">Seleccionar</option>
+                            {% for especialidad in especialidades %}
+                              <option value="{{ especialidad.id }}" {% if medico.especialidad and medico.especialidad.id == especialidad.id %}selected{% endif %}>
+                                {{ especialidad.nombre }}
+                              </option>
+                            {% endfor %}
+                          </select>
+
+                    
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputNumDoc">Número documento</label>
+                          <input type="number" class="form-control" id="inputNumDoc" placeholder="Número de documento" name="txtNumDoc" value="{{ medico.usuario.num_doc }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputNumTelf">Número teléfono</label>
+                          <input type="number" class="form-control" id="inputNumTelf" placeholder="Número de teléfono" name="txtTelefono" value="{{ medico.usuario.telefono }}">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail">Email</label>
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="txtEmail" value="{{ medico.usuario.user.email }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputDireccion">Dirección</label>
+                          <input type="text" class="form-control" id="inputDireccion" placeholder="Dirección" name="txtDireccion" value="{{ medico.direccion }}">
+                        </div>
+                    
+                      </div>
+
+                      <div class="modal-footer d-flex justify-content-between">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="RepeatSwitch" name="txtEstado" checked>
+                          <label class="custom-control-label" for="RepeatSwitch">Activo</label>
+                        </div>
+                        <div>
+                          <button type="submit" class="btn btn-primary mr-4">Guardar</button>
+                        <!--<button type="submit" class="btn btn-danger">Cancelar</button>-->
+                          <a href="{% url 'tabla_citas' %}" class="btn btn-danger">Cancelar</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+</main>
+     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+ 
+{% endblock %}

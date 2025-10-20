@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Editar pago</h2>
+              <div class="card-deck">
+                <div class="card shadow mb-4">
+                  <div class="card-body">
+                    <form>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputPaciente">Paciente</label>
+                          <select id="inputPaciente" class="form-control">
+                            <option selected>Seleccionar paciente</option>
+                            <option>Emily Ochoa</option>
+                            <option>Fabian Hernandez</option>
+                            <option>Melissa Ambuludi</option>
+                            <option>Anais Granda</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputFch">Fecha</label>
+                          <input type="date" class="form-control" id="inputFchN" placeholder="Fecha">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputServicio">Servicio</label>
+                          <select id="inputServicio" class="form-control">
+                            <option selected>Seleccionar servicio</option>
+                            <option>Rehabilitación</option>
+                            <option>Consulta</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputMedio">Medio</label>
+                          <select id="inputMedio" class="form-control">
+                            <option selected>Seleccionar medio</option>
+                            <option>Efectivo</option>
+                            <option>Tranferencia</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputMontoT">Monto total</label>
+                          <input type="number" class="form-control" id="inputMontoT" placeholder="Monto total">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputMontoP">Monto pendiente</label>
+                          <input type="number" class="form-control" id="inputMontoP" placeholder="Monto pendiente">
+                        </div>
+                         <div class="form-group col-md-6">
+                          <label for="inputEstado">Estado</label>
+                          <select id="inputEstado" class="form-control">
+                            <option selected>Seleccionar estado</option>
+                            <option>Pago parcial</option>
+                            <option>otro</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6"></div>
+                        
+                        <button type="submit" class="btn btn-primary mr-4">Guardar</button>
+                        <button type="submit" class="btn btn-danger">Cancelar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+      </main> <!-- main -->
+      
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+
+{% endblock %}

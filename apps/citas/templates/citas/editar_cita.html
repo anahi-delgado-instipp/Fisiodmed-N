@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Editar médico</h2>
+              <div class="card-deck">
+                <div class="card shadow mb-4">
+                  <div class="card-body">
+                    <form method="post" action="">
+                      {% csrf_token %}
+                      {% if error is not None %}
+                          <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                          </div>
+                      {% endif %}
+                      <div class="form-row">
+  
+                        <div class="form-group col-md-6">
+                          <label for="inputPaciente">Paciente</label required>
+                          <select id="inputPaciente" class="form-control select2" name="txtPaciente">
+                                  <option value="">Seleccionar</option>
+                              {% for paciente in pacientes %}
+                                  <option value="{{ paciente.id }}" {% if cita.paciente and cita.paciente.id == paciente.id %}selected{% endif %}>{{ paciente.usuario.user.first_name }} {{ paciente.usuario.user.last_name }}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputEspecialidad">Especialidad</label>
+                          <select id="inputEspecialidad" class="form-control select2" name="txtEspecialidad">
+                                  <option value="">Seleccionar</option>
+                              {% for especialidad in especialidades %}
+                                  <option value="{{ especialidad.id }}" {% if cita.especialidad and cita.especialidad.id == especialidad.id %}selected{% endif %}>{{ especialidad.nombre }}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputMedico">Médico</label>
+                          <select id="inputMedico" class="form-control select2" name="txtMedico">
+                                  <option value="">Seleccionar</option>
+                              {% for medico in medicos %}
+                                  <option value="{{ medico.id }}" {% if cita.medico and cita.medico.id == medico.id %}selected{% endif %}>{{ medico.usuario.user.first_name }} {{ medico.usuario.user.last_name }}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputMotivo">Motivo</label>
+                          <select id="inputMotivo" class="form-control select2" name="txtMotivo" value="{{ cita.motivo }}" required>
+                            <option selected>Seleccionar</option>
+                            <option value="Sesión de tratamiento" {% if cita.motivo == 'Sesión de tratamiento' %}selected{% endif %}>Sesión de tratamiento</option>
+                            <option value="Consulta" {% if cita.motivo == 'Consulta' %}selected{% endif %}>Consulta</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputServicio">Servicio</label required>
+                          <select id="inputServicio" class="form-control select2" name="txtServicio">
+                                  <option value="">Seleccionar</option>
+                              {% for servicio in servicios %}
+                                  <option value="{{ servicio.id }}" {% if cita.servicio and cita.servicio.id == servicio.id %}selected{% endif %}>{{ servicio.nombre }}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                          <label for="date-input1">Fecha</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" id="button-addon-date"><span class="fe fe-calendar fe-16"></span></div>
+                            </div>
+                            <input type="text" class="form-control drgpicker" id="drgpicker-start" name="txtFecha" value="{{ cita.fecha|date:'m/d/Y' }}">
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="startDate">Hora</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text" id="button-addon-time"><span class="fe fe-clock fe-16"></span></div>
+                            </div>
+                            <input type="text" class="form-control time-input" id="start-time" name="txtHora" value="{{ cita.hora|time:'h:i A' }}">
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="eventType">Duración</label>
+                          <select id="eventDuracion" class="form-control select2">
+                            <option value="30 minutos" {% if cita.duracion == '30 minutos' %}selected{% endif %}>30 minutos</option>
+                            <option value="45 minutos" {% if cita.duracion == '45 minutos' %}selected{% endif %}>45 minutos</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer d-flex justify-content-between">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="RepeatSwitch" name="txtEstado" checked>
+                          <label class="custom-control-label" for="RepeatSwitch">Activo</label>
+                        </div>
+                        <div>
+                          <button type="submit" class="btn btn-primary mr-4">Guardar</button>
+                        <!--<button type="submit" class="btn btn-danger">Cancelar</button>-->
+                          <a href="{% url 'tabla_medicos' %}" class="btn btn-danger">Cancelar</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+</main>
+     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+ 
+{% endblock %}

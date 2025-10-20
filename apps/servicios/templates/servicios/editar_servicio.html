@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Editar servicio</h2>
+              <div class="card-deck">
+                <div class="card shadow mb-4">
+                  <div class="card-body">
+                    <form method="post" action="">
+                      {% csrf_token %}
+                      {% if error is not None %}
+                          <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                          </div>
+                      {% endif %}
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputNombreServicio">Nombre del servicio</label>
+                          <input type="text" class="form-control" id="inputNombreServicio" placeholder="Nombre servicio" name="txtNombre" value="{{ servicio.nombre }}" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputEspecialidadServicio">Especialidad</label>
+                          <select id="inputEspecialidadServicio" class="form-control select2" name="txtEspecialidad" required>
+                            <option value="">Seleccionar especialidad</option>
+                            {% for especialidad in especialidades %}
+                              <option value="{{ especialidad.id }}" {% if servicio.especialidad.id == especialidad.id %}selected{% endif %}>{{ especialidad.nombre }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputSesionesServicio">Sesiones</label>
+                            <input type="number" class="form-control" id="inputSesionesServicio" placeholder="Número de sesiones" name="txtSesiones" value="{{ servicio.sesiones }}" min="0">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputDuracionServicio">Duración estimada</label>
+                          <select id="inputDuracionServicio" class="form-control" name="txtDuracion">
+                            <option selected>Seleccionar duración</option>
+                            <option value="30 minutos" {% if servicio.duracion == '30 minutos' %}selected{% endif %}>30 minutos</option>
+                            <option value="45 minutos" {% if servicio.duracion == '30 minutos' %}selected{% endif %}>45 minutos</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputCostoServicio">Costo</label>
+                          <input type="number" class="form-control" id="inputCostoServicio" placeholder="Costo" name="txtCosto" value="{{ servicio.costo }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputDescripcionServicio">Descripción</label>
+                          <input type="text" class="form-control" id="inputDescripcionServicio" placeholder="Descripción" name="txtDescripcion" value="{{ servicio.descripcion }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputEstado">Estado</label>
+                          <select id="inputEstado" class="form-control">
+                            <option selected>Seleccionar estado</option>
+                            <option>Activo</option>
+                            <option>Inactivo</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-6"></div>
+                      </div>
+
+                      <div class="modal-footer d-flex justify-content-between">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="RepeatSwitch" name="txtEstado" checked>
+                          <label class="custom-control-label" for="RepeatSwitch">Activo</label>
+                        </div>
+                        <div>
+                          <button type="submit" class="btn btn-primary mr-4">Guardar</button>
+                          <a href="{% url 'tabla_servicios' %}" class="btn btn-danger">Cancelar</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+      </main> <!-- main -->
+
+      
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+  </body>
+</html>
+{% endblock %}
