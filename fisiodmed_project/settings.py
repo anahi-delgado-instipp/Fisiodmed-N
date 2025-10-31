@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$'
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$')
+# SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -103,7 +103,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://usuario:contraseña@host:puerto/nombre_db',
+        default='postgresql://fisiodmed_y8ci_user:fMug1ZCx9HiPHqXswJf9QJ2jKFxpYVC8@dpg-d424qjjipnbc73c1qp60-a/fisiodmed_y8ci',
         conn_max_age=600,
         ssl_require=True
     )
