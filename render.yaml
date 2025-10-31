@@ -1,12 +1,10 @@
 services:
   - type: web
-    name: fisiodmed-n
+    name: fisiodmed
     env: python
     plan: free
-    buildCommand: "pip install -r requirements.txt"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
     startCommand: "gunicorn fisiodmed_project.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: fisiodmed_project.settings
       - key: PYTHON_VERSION
-        value: 3.11
+        value: 3.10
