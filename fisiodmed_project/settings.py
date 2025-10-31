@@ -98,15 +98,15 @@ WSGI_APPLICATION = 'fisiodmed_project.wsgi.application'
 #     }
 # }
 
-import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DATABASE_URL = os.getenv(
+    'DATABASE_URL',
+    f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+)
+import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://fisiodmed_y8ci_user:fMug1ZCx9HiPHqXswJf9QJ2jKFxpYVC8@dpg-d424qjjipnbc73c1qp60-a/fisiodmed_y8ci',
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
 }
 
 
