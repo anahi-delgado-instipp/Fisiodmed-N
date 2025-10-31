@@ -13,6 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$'
 # SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$')
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise ValueError("❌ SECRET_KEY is missing! Set it in your environment variables.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -104,10 +108,11 @@ DATABASE_URL = os.getenv(
     'DATABASE_URL',
     f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 )
-import dj_database_url
+
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 }
+import dj_database_url
 
 
 # Password validation
