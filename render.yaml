@@ -3,12 +3,11 @@ services:
     name: fisiodmed-n
     env: python
     plan: free
-   buildCommand: |
-  pip install -r requirements.txt
-  python manage.py collectstatic --noinput
-  python manage.py migrate
-  python create_superuser.py
-
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+      python create_superuser.py
     startCommand: gunicorn fisiodmed_project.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
@@ -16,10 +15,10 @@ services:
       - key: PYTHON_VERSION
         value: 3.11
       - key: DJANGO_SUPERUSER_USERNAME
-        value: ANAHID
+        value: anii
       - key: DJANGO_SUPERUSER_EMAIL
         value: notmxly@gmail.com
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: 7070
+        value: 12345
       - key: SECRET_KEY
         value: fhgfjjjhvjhggfvjyt6789y54t6y54t6y54t6y54t6y54t6y54t6y54t6y54t6
