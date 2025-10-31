@@ -26,7 +26,7 @@ ALLOWED_HOSTS =  ['fisiodmed-n.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-    
+
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Application definition
@@ -115,8 +115,9 @@ DATABASE_URL = os.getenv(
     f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 )
 
+
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 
