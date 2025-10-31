@@ -18,3 +18,5 @@ if not User.objects.filter(username=username).exists():
     print(f"✅ Superusuario '{username}' creado correctamente.")
 else:
     print(f"⚠️ El superusuario '{username}' ya existe.")
+
+print("Usuarios existentes:", list(User.objects.values_list("username", flat=True)))
