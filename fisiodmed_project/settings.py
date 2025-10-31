@@ -12,13 +12,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$'
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$')
-# SECRET_KEY = os.getenv('SECRET_KEY')
+#SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-h&gf+p-tm5ziy$emk2h9z@r)=@pnmo5h^fpq!ziww$r8=a8e*$')
+SECRET_KEY = os.environ.get('SECRET_KEY', default='fhgfjjjhvjhggfvjyt6789y54t6y54t6y54t6y54t6y54t6y54t6y54t6y54t6')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = 'RENDER' not in os.environ
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+#DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS =  ['fisiodmed-n.onrender.com', 'localhost', '127.0.0.1']
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
@@ -152,9 +156,11 @@ USE_TZ = True
 
 # Archivos estáticos (CSS, JS, imágenes)
 STATIC_URL = '/static/'
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Archivos multimedia (si usas imágenes subidas por usuarios)
 MEDIA_URL = '/media/'
