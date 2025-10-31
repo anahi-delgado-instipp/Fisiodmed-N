@@ -15,10 +15,10 @@ services:
       - key: PYTHON_VERSION
         value: 3.11
       - key: DJANGO_SUPERUSER_USERNAME
-        value: anii
+        value: ANAHID
       - key: DJANGO_SUPERUSER_EMAIL
         value: notmxly@gmail.com
       - key: DJANGO_SUPERUSER_PASSWORD
-        value: 12345
+        value: 7070
       - key: SECRET_KEY
         value: fhgfjjjhvjhggfvjyt6789y54t6y54t6y54t6y54t6y54t6y54t6y54t6y54t6
