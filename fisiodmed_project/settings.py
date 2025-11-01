@@ -65,14 +65,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fisiodmed_project.wsgi.application'
 
-# ✅ Carpeta persistente para SQLite en Render
-DB_DIR = BASE_DIR / "render_data"
-DB_DIR.mkdir(exist_ok=True)
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DB_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # ✅ Render la encontrará aquí
     }
 }
 
