@@ -1,26 +1,19 @@
-import os
 from pathlib import Path
+import os
 from dotenv import load_dotenv
 
-# Cargar variables del archivo .env (opcional pero recomendable)
 load_dotenv()
 
-# BASE_DIR (directorio raíz del proyecto)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ===========================
-# 🔐 SEGURIDAD
-# ===========================
+SECRET_KEY = os.environ.get('SECRET_KEY', default='clave-super-secreta')
+DEBUG = 'RENDER' not in os.environ
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'clave-secreta-para-render')  # cambia esto en producción
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fisiodmed-n.onrender.com']
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-DEBUG = False  # Render ya maneja su propio modo de despliegue
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
-
-# ===========================
-# 🧩 APLICACIONES INSTALADAS
-# ===========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,16 +21,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Tus apps
-    'fisiodmed_project',  # ejemplo, cambia por tus apps
+    # tus apps
+    'apps.pacientes',
+    'apps.pagos',
+    'apps.servicios',
+    'apps.usuarios',
+    'apps.citas',
+    'apps.inicio',
+    'apps.dashboard',
+    'apps.reportes',
+    'apps.autenticacion',
+    'apps.especialidades',
+    'apps.medicos',
 ]
 
-# ===========================
-# ⚙️ MIDDLEWARE
-# ===========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <- para servir archivos estáticos
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,17 +48,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'fisiodmed_project.urls'
 
-# ===========================
-# 🎨 TEMPLATES
-# ===========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # si usas carpeta templates
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -69,19 +65,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fisiodmed_project.wsgi.application'
 
-# ===========================
-# 💾 BASE DE DATOS (SQLite)
-# ===========================
+# ✅ Carpeta persistente para SQLite en Render
+DB_DIR = BASE_DIR / "render_data"
+DB_DIR.mkdir(exist_ok=True)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DB_DIR / 'db.sqlite3',
     }
 }
 
-# ===========================
-# 🔑 AUTENTICACIÓN
-# ===========================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -89,33 +83,20 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ===========================
-# 🌎 LOCALIZACIÓN
-# ===========================
 LANGUAGE_CODE = 'es-es'
-TIME_ZONE = 'America/Guayaquil'
+TIME_ZONE = 'America/Lima'
 USE_I18N = True
 USE_TZ = True
 
-# ===========================
-# 🧾 ARCHIVOS ESTÁTICOS
-# ===========================
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# ===========================
-# 📤 ARCHIVOS MEDIA (si los usas)
-# ===========================
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# ===========================
-# 🚀 CONFIGURACIÓN FINAL
-# ===========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = 'index'
